@@ -312,6 +312,14 @@ export default function App() {
       }
 
       if (!response.ok) {
+        if (
+          !isWorkerDirect &&
+          (response.status === 404 || response.status === 405)
+        ) {
+          throw new Error(
+            "Static hosting (like GitHub Pages) cannot run /api/advisor. Click the Worker button above and paste your deployed Cloudflare Worker (*.workers.dev) URL."
+          );
+        }
         const errMsg =
           typeof data.error === "string"
             ? data.error

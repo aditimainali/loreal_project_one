@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ArrowDown } from "lucide-react";
 import { LanguageCode } from "../types";
 import { UI_COPY } from "../data/i18n";
+import heroAtelierImg from "../assets/images/hero_loreal_atelier_1795753337183.jpg";
 
 interface HeroProps {
   language: LanguageCode;
@@ -46,7 +47,7 @@ export const Hero: React.FC<HeroProps> = ({ language }) => {
           <div className="relative h-full min-h-[240px] overflow-hidden rounded-lg border border-black/10 bg-[#efece6]">
             {!imgFailed ? (
               <img
-                src="/src/assets/images/hero_loreal_atelier_1795753337183.jpg"
+                src={heroAtelierImg}
                 alt={copy.heroImageAlt}
                 referrerPolicy="no-referrer"
                 onError={() => setImgFailed(true)}
