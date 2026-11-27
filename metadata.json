@@ -1,0 +1,6 @@
+{
+  "name": "L'Oréal Smart Routine & Product Advisor",
+  "description": "Product-aware AI beauty routine builder featuring real L'Oréal Group products, personalized routine generation, conversational advisor with live web search citations, and RTL support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
