@@ -83,7 +83,7 @@ function readInitialWorkerUrl(): string {
   } catch {
     // Ignore storage errors
   }
-  const envUrl = import.meta.env.VITE_CLOUDFLARE_WORKER_URL;
+  const envUrl = import.meta.env?.VITE_CLOUDFLARE_WORKER_URL;
   return typeof envUrl === "string" ? envUrl.trim() : "";
 }
 

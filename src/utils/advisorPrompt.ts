@@ -1,5 +1,3 @@
-import { LanguageCode } from "../types";
-
 export interface PromptProductSummary {
   brand: string;
   name: string;
@@ -9,7 +7,7 @@ export interface PromptProductSummary {
 
 export function buildAdvisorSystemPrompt(
   selectedProducts: PromptProductSummary[],
-  language: LanguageCode
+  language: "en" | "ar"
 ): string {
   const productSummary =
     selectedProducts.length > 0
