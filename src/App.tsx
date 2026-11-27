@@ -76,6 +76,8 @@ function readInitialActiveSessionId(sessions: ChatSession[]): string {
   return `chat-${Date.now()}`;
 }
 
+const DEFAULT_WORKER_URL = "https://loreal-routine-advisor.amainal.workers.dev/";
+
 function readInitialWorkerUrl(): string {
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY_WORKER_URL);
@@ -84,7 +86,10 @@ function readInitialWorkerUrl(): string {
     // Ignore storage errors
   }
   const envUrl = import.meta.env?.VITE_CLOUDFLARE_WORKER_URL;
-  return typeof envUrl === "string" ? envUrl.trim() : "";
+  if (typeof envUrl === "string" && envUrl.trim()) {
+    return envUrl.trim();
+  }
+  return DEFAULT_WORKER_URL;
 }
 
 export default function App() {

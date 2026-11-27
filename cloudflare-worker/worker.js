@@ -29,6 +29,31 @@ function jsonResponse(payload, status = 200) {
   });
 }
 
+function extractResponseText(responseJson) {
+  if (
+    typeof responseJson?.output_text === "string" &&
+    responseJson.output_text.trim().length > 0
+  ) {
+    return responseJson.output_text.trim();
+  }
+
+  const output = Array.isArray(responseJson?.output) ? responseJson.output : [];
+  const chunks = [];
+  for (const item of output) {
+    if (item?.type !== "message" || !Array.isArray(item.content)) continue;
+    for (const part of item.content) {
+      if (
+        (part?.type === "output_text" || part?.type === "text") &&
+        typeof part?.text === "string" &&
+        part.text.trim().length > 0
+      ) {
+        chunks.push(part.text.trim());
+      }
+    }
+  }
+  return chunks.join("\n\n").trim();
+}
+
 function extractResponseCitations(responseJson) {
   const sources = [];
   const seen = new Set();
@@ -110,11 +135,7 @@ export default {
 
           if (searchResp.ok) {
             const searchData = await searchResp.json();
-            const content =
-              typeof searchData?.output_text === "string" &&
-              searchData.output_text.trim().length > 0
-                ? searchData.output_text.trim()
-                : "";
+            const content = extractResponseText(searchData);
 
             if (content) {
               const sources = extractResponseCitations(searchData);
