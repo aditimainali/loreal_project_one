@@ -26,6 +26,13 @@ export default defineConfig(() => {
           if (fs.existsSync(distDir) && fs.existsSync(srcAssets)) {
             fs.cpSync(srcAssets, distAssets, {recursive: true, force: true});
           }
+          // Mirror dist/ into docs/ so GitHub Pages "Deploy from a branch -> /docs" works out of the box
+          if (fs.existsSync(distDir)) {
+            const docsDir = path.resolve(__dirname, 'docs');
+            fs.rmSync(docsDir, {recursive: true, force: true});
+            fs.cpSync(distDir, docsDir, {recursive: true, force: true});
+            fs.writeFileSync(path.join(docsDir, '.nojekyll'), '');
+          }
         },
       },
     ],
